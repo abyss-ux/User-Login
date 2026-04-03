@@ -4,8 +4,6 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { User } from "../models/user.models.js"
 
     const registerUser = asyncHandler(async(req,res,next)=>{
-        console.log("Checking next in Controller:", typeof next);
-    //* Get Data and Validate 
 
     const {username, email, password} = req.body; // Get user data from frontend(req.body)
 
@@ -39,6 +37,24 @@ import { User } from "../models/user.models.js"
     );
 
 });
+
+
+// const registerUser = asyncHandler(async (req, res) => {
+//     const { username, email, password } = req.body;
+
+//     // Logic: If validation fails, just THROW. 
+//     // The asyncHandler catches it and sends it to your Global Error Handler in app.js
+//     if (!username) {
+//         throw new ApiError(400, "Username is required");
+//     }
+
+//     return res.status(201).json({
+//         success: true,
+//         data: { username, email },
+//         message: "User registered successfully",
+//     });
+// });
+
 
      const loginUser = asyncHandler(async(req,res,next)=>{
         //* get data from req.body (email and password)

@@ -16,11 +16,18 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
  //Declaration
-   app.use("/api/v1/users",userRouter)
+ 
+ app.get("/",(req,res)=>{
+     res.send("Welcome to the SERVER!!")
+    })
+    
+    app.use("/api/v1/users",userRouter)
+   
+    
 
 //global Error handler
 app.use((err,req,res,next)=>{
-    console.log;
+    console.log("Global Error Handler",err);
     const statusCode = err.statusCode||500;
     const message = err.message || "Internal Server Error"
 
@@ -28,7 +35,7 @@ app.use((err,req,res,next)=>{
         success : false,
         statusCode,
         message,
-        errors : err.errors || [],
+        errors : err.error || "Laude ka error",
         stack : process.env.NODE_ENV === "development"? err.stack : undefined 
     })
 

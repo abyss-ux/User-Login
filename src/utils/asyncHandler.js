@@ -1,10 +1,9 @@
-export const asyncHandler = (requestHandler) =>{
-    return(req,res,next) =>{
-        console.log("checking next in asyncHandler",typeof next);
-        Promise.resolve(requestHandler(req,res,next)).catch((err) => next(err))
-    }
-}
-
+export const asyncHandler = (requestHandler) => {
+    return (req, res, next) => {
+        Promise.resolve(requestHandler(req, res, next))
+            .catch((err) => next(err));
+    };
+};
 
 
     //* one of the method to form asyncHandler function using try catch block 

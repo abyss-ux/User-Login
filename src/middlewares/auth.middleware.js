@@ -3,30 +3,28 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.models.js";
 import jwt from "jsonwebtoken";
 
-export const verifyJWT = asyncHandler(async(req,_,next)=>{
-    try{
-        //* Get token from cookies or Auth Header 
-        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer","");
-        if(!token){
-            throw new ApiError(401,"Unauthorized Request")
-        }
-        //* Decode the token 
-        const decodedToken =  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET);
-        
-        //* Find User in DB 
-        const user = await User.findById(decodedToken?._id).select("-password -refreshToken");
+export const verifyJWT = asyncHandler(async (req, _, next) => {
+    // 1. Extract Token
+    const token = req.cookies?.accessToken || 
+                  req.header("Authorization")?.replace("Bearer ", ""); // Added space after Bearer
 
-        if(!user){
-            throw new ApiError(401,"Invalid Access Token");
-        }
+    if (!token) {
+        throw new ApiError(401, "Unauthorized request");
+    }
 
-        //* Attach user to the request
-        req.user = user; 
-        next();
+    // 2. Verify Token
+    // If jwt.verify fails, it throws an error. 
+    // asyncHandler will catch it and send it to your global error handler.
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    // 3. Find User
+    const user = await User.findById(decodedToken?._id).select("-password -refreshToken");
+
+    if (!user) {
+        throw new ApiError(401, "Invalid Access Token");
     }
-    catch(error){
-        throw new ApiError(401,error?.message||"Invalid access token");
-    }
-        
-    
+
+    // 4. Attach to Request
+    req.user = user;
+    next(); 
 });
