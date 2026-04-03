@@ -1,5 +1,6 @@
 export const asyncHandler = (requestHandler) =>{
     return(req,res,next) =>{
+        console.log("checking next in asyncHandler",typeof next);
         Promise.resolve(requestHandler(req,res,next)).catch((err) => next(err))
     }
 }

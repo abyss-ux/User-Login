@@ -3,7 +3,8 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { User } from "../models/user.models.js"
 
-    const registerUser = asyncHandler(async(req,res)=>{
+    const registerUser = asyncHandler(async(req,res,next)=>{
+        console.log("Checking next in Controller:", typeof next);
     //* Get Data and Validate 
 
     const {username, email, password} = req.body; // Get user data from frontend(req.body)
@@ -39,7 +40,7 @@ import { User } from "../models/user.models.js"
 
 });
 
-     const loginUser = asyncHandler(async(req,res)=>{
+     const loginUser = asyncHandler(async(req,res,next)=>{
         //* get data from req.body (email and password)
         const {email , password } = req.body;
         //*check if user exist
@@ -87,7 +88,7 @@ import { User } from "../models/user.models.js"
         
     });
 
-    const logoutUser = asyncHandler(async(req,res)=>{
+    const logoutUser = asyncHandler(async(req,res,next)=>{
         //* 1. find user and remove the refresh token from DB 
         //* we get req.user._id from the verify JWT middleware
         await User.findByIdAndUpdate(

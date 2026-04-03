@@ -15,6 +15,9 @@ app.use(express.urlencoded({extended:true,limit:"10kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+ //Declaration
+   app.use("/api/v1/users",userRouter)
+
 //global Error handle
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode||500;
@@ -30,7 +33,6 @@ app.use((err,req,res,next)=>{
 
 })
 
-   //Declaration
-   app.use("/api/v1/auth",userRouter) 
+   
 
 export {app}
