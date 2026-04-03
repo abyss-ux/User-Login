@@ -23,6 +23,9 @@ const userSchema = new Schema({
         trim:true,
         unique:true,
     },
+    lastLogin:{
+        type:Date
+    },
     refreshToken: {
     type: String
 }
@@ -64,3 +67,5 @@ userSchema.methods.generateRefreshToken = function(){
 
     )
 }
+
+export const User = mongoose.model("User",userSchema)

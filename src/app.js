@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import userRouter from "./routes/user.route.js";
 
 const app = express();
 
@@ -28,5 +29,8 @@ app.use((err,req,res,next)=>{
     })
 
 })
+
+   //Declaration
+   app.use("/api/v1/auth",userRouter) 
 
 export {app}
