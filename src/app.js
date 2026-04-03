@@ -18,7 +18,7 @@ app.use(cookieParser())
  //Declaration
    app.use("/api/v1/users",userRouter)
 
-//global Error handle
+//global Error handler
 app.use((err,req,res,next)=>{
     console.log;
     const statusCode = err.statusCode||500;
@@ -28,7 +28,7 @@ app.use((err,req,res,next)=>{
         success : false,
         statusCode,
         message,
-        errors : err.error || [],
+        errors : err.errors || [],
         stack : process.env.NODE_ENV === "development"? err.stack : undefined 
     })
 

@@ -7,7 +7,7 @@ import { ftruncateSync } from "fs";
 const userSchema = new Schema({
     username:{
         type:String,
-        requrired:true,
+        required:true,
         unique:true,
         index:true,
         trim:true,
