@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { strict } from "assert";
 import { ftruncateSync } from "fs";
+import { type } from "os";
 
 const userSchema = new Schema({
     username:{
@@ -28,7 +29,22 @@ const userSchema = new Schema({
     },
     refreshToken: {
     type: String
-}
+    },
+    isVerified:{
+        type:Boolean,
+        default:false
+    },
+    otp:{
+        type:String,
+
+    },   
+    otpExpiry:{
+        type:Date,
+    },
+    lastUsedDevice:{
+        type:String, // Hash of IP + User Agent
+    }
+
 },{timestamps:true})
 
 userSchema.pre("save",async function () { //pre->hook runs before saving to DB , save->trigger when you call

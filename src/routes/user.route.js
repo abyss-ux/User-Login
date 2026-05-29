@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    verifyLoginOTP
 } from "../controllers/user.controller.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -12,6 +13,7 @@ const router = Router();
 //Anyone can access these(signups and login)
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser)
+router.route("/verify-otp").post(verifyLoginOTP)    
 
 // Secured Routes
 router.route("/logout").post(verifyJWT,logoutUser);
