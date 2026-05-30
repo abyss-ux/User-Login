@@ -6,14 +6,16 @@ import {
     verifyLoginOTP
 } from "../controllers/user.controller.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { authLimiter,otpLimiter } from "../middlewares/rateLimiter.middleware.js";
+
 
 const router = Router();
 
 // Public Route
 //Anyone can access these(signups and login)
-router.route("/register").post(registerUser);
-router.route("/login").post(loginUser)
-router.route("/verify-otp").post(verifyLoginOTP)    
+router.route("/register").post(authLimiter,registerUser);
+router.route("/login").post(authLimiter,loginUser)
+router.route("/verify-otp").post(otpLimiter,verifyLoginOTP)    
 
 // Secured Routes
 router.route("/logout").post(verifyJWT,logoutUser);

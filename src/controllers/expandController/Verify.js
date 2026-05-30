@@ -1,9 +1,8 @@
-import { ApiError } from "../utils/ApiError.js"
-import { ApiResponse } from "../utils/ApiResponse.js"
-import { asyncHandler } from "../utils/asyncHandler.js"
-import { User } from "../models/user.models.js"
-import { sendEmail } from "../utils/mail.js"
-
+import {ApiError} from "../../utils/ApiError.js"
+import {ApiResponse} from "../../utils/ApiResponse.js"
+import {asyncHandler} from "../../utils/asyncHandler.js"
+import {User} from "../../models/user.models.js"
+import {sendMail} from "../../utils/mail.js"
 //const currentDevice = req.headers["user-agent"];
 
 
@@ -20,6 +19,7 @@ import { sendEmail } from "../utils/mail.js"
         }
 
         //clear this OTP tokens and save this browser fingerprint as the new "lastUsedDevice"
+        user.isVerified = true;
         user.otp = undefined;
         user.otpExpiry = undefined;
         user.lastUsedDevice = currentDevice;
